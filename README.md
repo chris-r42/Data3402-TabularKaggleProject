@@ -94,44 +94,6 @@ Compared full-feature vs. pruned models on the validation set using:
 
 ---
 
-## Repository Structure
-
-```
-Data3402-TabularKaggleProject/
-├── README.md                      # This file
-├── .gitignore
-├── Dataset/
-│   └── train.csv                  # Training data from Kaggle
-└── Programfiles/
-    └── project.ipynb              # Main project notebook
-```
-
----
-
-## How to Run
-
-1. Clone the repository.
-2. Download `train.csv` from the [Kaggle competition page](https://www.kaggle.com/competitions/santander-customer-satisfaction/data) and place it in the `Dataset/` folder.
-3. Open `Programfiles/project.ipynb` in Jupyter.
-4. Run all cells top to bottom.
-
-## Requirements
-
-- Python 3.10+
-- numpy
-- pandas
-- matplotlib
-- seaborn
-- scikit-learn
-- joblib
-
-Install with:
-```bash
-pip install numpy pandas matplotlib seaborn scikit-learn joblib
-```
-
----
-
 ## Summary of Pipeline
 
 | Step | Action | Columns Remaining |
