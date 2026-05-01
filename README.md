@@ -79,7 +79,6 @@ Key hyperparameters:
 ### 5. Evaluation
 Compared full-feature vs. pruned models on the validation set using:
 - ROC-AUC (the official Kaggle metric)
-- Confusion matrix
 - Classification report (precision, recall, F1)
 
 ---
@@ -88,8 +87,8 @@ Compared full-feature vs. pruned models on the validation set using:
 
 | Model | Features | Validation ROC-AUC |
 |---|---|---|
-| Random Forest (full) | 273 | _[fill in from notebook]_ |
-| Random Forest (pruned) | _[fill in]_ | _[fill in]_ |
+| Random Forest (full) | 273 | _0.75_ |
+| Random Forest (pruned) | _76_ | _0.76_ |
 
 **Key finding:** The pruned model achieves comparable ROC-AUC with significantly fewer features, confirming that most of the signal is concentrated in a small subset of the original 370 features.
 
