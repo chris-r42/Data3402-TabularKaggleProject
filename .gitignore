@@ -2,3 +2,4 @@
 /.claude
 Programfiles/.claude/desktop.ini
 Programfiles/.claude/settings.local.json
+Programfiles/rf_pruned.joblib
