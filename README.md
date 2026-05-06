@@ -57,7 +57,7 @@ The `TARGET` distribution is heavily skewed: 73,012 satisfied customers (96.04%)
 
 Computed per-feature correlation with `TARGET` to see which variables had any obvious linear relationship:
 
-![Feature Correlation With TARGET](Images/featureCorr_TAR.png)
+![Feature Correlation With TARGET](Images/featureCorr_TARGET.png)
 
 The strongest correlations were only ~0.10 (`var36`, `var15`), suggesting linear models alone would not perform well and that a non-linear model (e.g. tree ensemble) was the better choice.
 
