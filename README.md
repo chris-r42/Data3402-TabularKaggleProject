@@ -41,7 +41,7 @@ Feature naming convention (Spanish-origin prefixes):
 
 The `TARGET` distribution is heavily skewed: 73,012 satisfied customers (96.04%) vs. 3,008 unsatisfied (3.96%). This drove two important modeling decisions later — using ROC-AUC instead of accuracy, and using `class_weight='balanced'` in the classifier.
 
-![TARGET Distribution](Images/target_distribution.png)
+![TARGET Distribution](Images/TargetDistribution.png)
 
 ---
 
@@ -57,7 +57,7 @@ The `TARGET` distribution is heavily skewed: 73,012 satisfied customers (96.04%)
 
 Computed per-feature correlation with `TARGET` to see which variables had any obvious linear relationship:
 
-![Feature Correlation With TARGET](Images/correlation_with_target.png)
+![Feature Correlation With TARGET](Images/featureCorr_TAR.png)
 
 The strongest correlations were only ~0.10 (`var36`, `var15`), suggesting linear models alone would not perform well and that a non-linear model (e.g. tree ensemble) was the better choice.
 
@@ -65,13 +65,13 @@ The strongest correlations were only ~0.10 (`var36`, `var15`), suggesting linear
 
 Two filtering steps were applied to remove uninformative columns:
 
-![Columns Flagged for Removal](Images/columns_flagged_for_removal.png)
+![Columns Flagged for Removal](Images/zeroCol_lovVar.png)
 
 **Step A — Drop fully-zero columns:** Identified and removed 34 columns where every single value was 0. This reduced the column count from 370 → 336.
 
 **Step B — Variance Threshold filtering:** Used `sklearn.feature_selection.VarianceThreshold` with a threshold of 0.1 to remove an additional 97 near-zero variance features. The histograms below show a representative sample of the columns that were dropped — they are essentially constant at zero with only a handful of nonzero values, confirming they would not contribute useful signal:
 
-![Low-Variance Columns](Images/low_variance_columns.png)
+![Low-Variance Columns](Images/low-variance-variablesGraphed.png)
 
 After both cleaning steps, **272 features remained** for modeling.
 
@@ -93,7 +93,7 @@ Key hyperparameters:
 
 **Feature Importance:** After training the baseline, extracted `feature_importances_` to see which features the model actually relied on. The top features were dominated by `var38`, `var15`, and several `saldo_medio_var5_*` columns:
 
-![Top 30 Feature Importances](Images/feature_importance.png)
+![Top 30 Feature Importances](Images/feature-importance.png)
 
 **Feature Pruning:** Used cumulative importance to select the smallest set of features that account for 95% of total importance. This is a more principled cutoff than picking an arbitrary "top N." This reduced the feature set from 272 → 76.
 
@@ -109,7 +109,7 @@ Compared full-feature vs. pruned models on the validation set using ROC-AUC (the
 
 ### ROC Curve Comparison
 
-![ROC Curve](Images/roc_curve.png)
+![ROC Curve](Images/ROC-Curve.png)
 
 | Model | Features | Validation ROC-AUC |
 |---|---|---|
@@ -120,55 +120,11 @@ Compared full-feature vs. pruned models on the validation set using ROC-AUC (the
 
 ### Confusion Matrix (Pruned Model, threshold = 0.5)
 
-![Confusion Matrix](Images/confusion_matrix.png)
+![Confusion Matrix](Images/confusionmatrix.png)
 
 The confusion matrix highlights a known limitation: at the default 0.5 probability threshold, the model correctly identifies 97.6% of satisfied customers but only 12.1% of unsatisfied customers. This is expected given the 96/4 class imbalance — the model ranks the rare class reasonably well (as the AUC of 0.76 shows), but the default threshold is not tuned for recall on the minority class. In a production setting, the decision threshold would be tuned to the business cost of false negatives vs. false positives. Since the Kaggle competition is scored on AUC (which is threshold-independent), threshold tuning was not required for this project.
 
 ---
-
-## Repository Structure
-
-```
-Data3402-TabularKaggleProject/
-├── README.md                            # This file
-├── .gitignore
-├── Images/                              # Visuals embedded in this README
-│   ├── target_distribution.png
-│   ├── correlation_with_target.png
-│   ├── columns_flagged_for_removal.png
-│   ├── low_variance_columns.png
-│   ├── feature_importance.png
-│   ├── roc_curve.png
-│   └── confusion_matrix.png
-├── Dataset/
-│   └── train.csv                        # Training data from Kaggle
-└── Programfiles/
-    └── project.ipynb                    # Main project notebook
-```
-
----
-
-## How to Run
-
-1. Clone the repository.
-2. Download `train.csv` from the [Kaggle competition page](https://www.kaggle.com/competitions/santander-customer-satisfaction/data) and place it in the `Dataset/` folder.
-3. Open `Programfiles/project.ipynb` in Jupyter.
-4. Run all cells top to bottom.
-
-## Requirements
-
-- Python 3.10+
-- numpy
-- pandas
-- matplotlib
-- seaborn
-- scikit-learn
-- joblib
-
-Install with:
-```bash
-pip install numpy pandas matplotlib seaborn scikit-learn joblib
-```
 
 ---
 
